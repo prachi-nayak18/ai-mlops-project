@@ -1,0 +1,11 @@
+pycache/
+*.pyc
+*.pkl
+*.egg-info/
+.env
+data/raw/*
+data/processed/*
+models/artifacts/*
+logs/
+mlruns/
+.DS_Store

@@ -1,0 +1,50 @@
+project:
+  name: "mlops-pipeline"
+  version: "1.0.0"
+
+data:
+  raw_path: "data/raw"
+  processed_path: "data/processed"
+  test_size: 0.2
+  val_size: 0.1
+  random_seed: 42
+  target_column: "target"
+  source_type: "csv"
+  source_path: "data/raw/dataset.csv"
+
+preprocessing:
+  handle_missing: "median"
+  scale_features: true
+  scaler: "standard"
+  encode_categoricals: true
+  encoding: "onehot"
+
+model:
+  type: "classification"
+  algorithm: "random_forest"
+  hyperparameters:
+    n_estimators: 100
+    max_depth: 6
+    random_state: 42
+  save_path: "models/artifacts/model.pkl"
+
+mlflow:
+  tracking_uri: "http://localhost:5000"
+  experiment_name: "mlops-experiment"
+  run_name: "run-v1"
+  register_model: false
+  model_name: "mlops-model"
+
+evaluation:
+  promotion_thresholds:
+    accuracy: 0.75
+    f1_weighted: 0.70
+
+serving:
+  host: "0.0.0.0"
+  port: 8000
+  model_path: "models/artifacts/model.pkl"
+  preprocessor_path: "models/artifacts/preprocessor.pkl"
+
+logging:
+  level: "INFO"
